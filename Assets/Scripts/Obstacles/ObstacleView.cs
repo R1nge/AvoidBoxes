@@ -16,7 +16,11 @@ namespace Obstacles
 
         private void OnCollisionEnter2D(Collision2D other)
         {
-            _obstacle.IncreaseScore(points);
+            if (!other.gameObject.CompareTag("Player"))
+            {
+                _obstacle.IncreaseScore(points);
+            }
+
             Destroy(gameObject);
         }
     }

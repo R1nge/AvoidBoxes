@@ -1,10 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using VContainer;
 
 namespace States
 {
     public sealed class GameStateManager
     {
+        public event Action<GameStates> OnStateChanged; 
+
         private Dictionary<GameStates, IGameState> _states;
         private IGameState _currentState;
         private readonly GameStateFactory _gameStateFactory;
@@ -34,6 +37,7 @@ namespace States
             _currentState?.Exit();
             _currentState = _states[newState];
             _currentState.Enter();
+            OnStateChanged?.Invoke(newState);
         }
     }
 
